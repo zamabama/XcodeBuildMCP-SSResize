@@ -87,6 +87,7 @@ export interface FeatureDetector {
 }
 
 export interface DoctorDependencies {
+  commandExecutor: CommandExecutor;
   binaryChecker: BinaryChecker;
   xcode: XcodeInfoProvider;
   env: EnvironmentInfoProvider;
@@ -96,6 +97,7 @@ export interface DoctorDependencies {
 }
 
 export function createDoctorDependencies(executor: CommandExecutor): DoctorDependencies {
+  const commandExecutor = executor;
   const binaryChecker: BinaryChecker = {
     async checkBinaryAvailability(binary: string) {
       // If bundled axe is available, reflect that in dependencies even if not on PATH
@@ -276,7 +278,7 @@ export function createDoctorDependencies(executor: CommandExecutor): DoctorDepen
     doesMakefileExist,
   };
 
-  return { binaryChecker, xcode, env, plugins, runtime, features };
+  return { commandExecutor, binaryChecker, xcode, env, plugins, runtime, features };
 }
 
 export type { CommandExecutor };
