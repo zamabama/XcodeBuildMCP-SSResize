@@ -4,12 +4,11 @@
   "mcpName": "com.xcodebuildmcp-ssresize/XcodeBuildMCP-SSResize",
   "iOSTemplateVersion": "v1.0.8",
   "macOSTemplateVersion": "v1.0.5",
-  "main": "build/index.js",
+  "main": ".smithery/index.cjs",
   "type": "module",
   "module": "src/smithery.ts",
   "bin": {
-    "xcodebuildmcp-ssresize": "build/index.js",
-    "xcodebuildmcp-ssresize-doctor": "build/doctor-cli.js"
+    "xcodebuildmcp-ssresize": ".smithery/index.cjs"
   },
   "scripts": {
     "build": "npm run generate:version && npm run generate:loaders && npx smithery build",
