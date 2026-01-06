@@ -68,11 +68,14 @@ export async function screenshotLogic(
     log('info', `${LOG_PREFIX}/screenshot: Success for ${simulatorId}`);
 
     try {
-      // Optimize the image for LLM consumption: resize to max 800px width and convert to JPEG
+      // Get configurable max dimension from environment variable, default to 1024
+      const maxDimension = process.env.SCREENSHOT_MAX_DIMENSION || '1024';
+
+      // Optimize the image for LLM consumption: resize to configurable max dimension and convert to JPEG
       const optimizeArgs = [
         'sips',
         '-Z',
-        '800', // Resize to max 800px (maintains aspect ratio)
+        maxDimension, // Resize to max dimension (maintains aspect ratio)
         '-s',
         'format',
         'jpeg', // Convert to JPEG
@@ -104,7 +107,7 @@ export async function screenshotLogic(
         };
       }
 
-      log('info', `${LOG_PREFIX}/screenshot: Image optimized successfully`);
+      log('info', `${LOG_PREFIX}/screenshot: Image optimized to max ${maxDimension}px successfully`);
 
       // Read the optimized image file as base64
       const base64Image = await fileSystemExecutor.readFile(optimizedPath, 'base64');
